@@ -21,4 +21,16 @@ services:
             - ./nginx/ssl:/etc/nginx/ssl
             - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         depends_on:
+            - flask    
+    # Test service for running tests in an isolated environment
+    test:
+        build: .
+        container_name: flask-test
+        volumes:
+            - ./:/deploy
+        working_dir: /deploy
+        command: pytest tests/ -v
+        environment:
+            - PYTHONUNBUFFERED=1
+        depends_on:
             - flask

@@ -250,6 +250,40 @@ def post_send_password_reset():
     flash("Could not reset password. Please contact support to resolve this issue.", "error")
     return redirect(url_for("get_login_page"))
 
+@app.post('/users/<user_uuid>/toggle-active')
+@login_required
+def post_toggle_user_active(user_uuid: str):
+    if not validate_uuid(user_uuid):
+        abort(400)
+    
+    user = get_user_by_uuid(user_uuid)
+    if not user:
+        abort(404)
+    
+    # Check if user can deactivate (when making user inactive)
+    if user.active and not current_user.can("deactivate_user"):
+        abort(403)
+    
+    # Check if user can manage deactivated users (when making user active)
+    if not user.active and not current_user.can("manage_deactivated_users"):
+        abort(403)
+    
+    # Prevent toggling system roles unless current user is also system
+    if (user.role.system) and not current_user.role.system:
+        abort(403)
+    
+    # Toggle the active status
+    user.active = not user.active
+    
+    if not save():
+        flash(f"A database error occurred while updating the user. Please try again otherwise contact an admin.", "error")
+        return redirect(url_for("get_user_profile", user_uuid=user_uuid))
+    
+    # Success message
+    status = "activated" if user.active else "deactivated"
+    flash(f"User {status} successfully!", "success")
+    return redirect(url_for("get_user_profile", user_uuid=user_uuid))
+
 
 # ==============================================================================================================================================================
 #                                                                 Action Registrations

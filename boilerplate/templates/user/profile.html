@@ -37,11 +37,11 @@
                             </button>
                         {% endif %}
                         {% if user.active and current_user.can("deactivate_user") and ((not user.role.system) or current_user.role.system) %}
-                            <button class="btn btn-danger w-100 mt-2 initial-shown" type="button"><i class="fa-solid fa-user-xmark"></i> Deactivate User Account
+                            <button onclick="toggleUserActive('{{ user.uuid }}')" class="btn btn-danger w-100 mt-2 initial-shown" type="button"><i class="fa-solid fa-user-xmark"></i> Deactivate User Account
                             </button>
                         {% endif %}
                         {% if ((not user.active) and current_user.can("manage_deactivated_users")) and ((not user.role.system) or current_user.role.system) %}
-                            <button class="btn btn-success w-100 mt-2 initial-shown" type="button"><i class="fa-solid fa-user-check"></i> Activate User Account
+                            <button onclick="toggleUserActive('{{ user.uuid }}')" class="btn btn-success w-100 mt-2 initial-shown" type="button"><i class="fa-solid fa-user-check"></i> Activate User Account
                             </button>
                         {% endif %}
                     </div>

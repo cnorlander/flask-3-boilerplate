@@ -1,23 +1,209 @@
-# Flask Boilerplate
-## Work in progress!
+# Flask 3 Boilerplate
 
-This is a basic Flask web application created to be a jumping off point for future apps. Some features will include:
-- [X] Auth w/ Flask Logon and Bcrypt.
-- [X] Password Reset Feature.
-- [X] Flask-SQLAlchemy for ORM.
-- [X] SQLite DB file for portability
-- [X] A Fancy logon page.
-- [X] A menu template
-- [X] Some basic page templates.
-- [ ] User management pages
-- [X] A role management page.
-- [X] An easy to use and flexible role and action system for managing permissions
-- [X] Docker and Docker-Compose files for easy deployment
-- [X] Gunicorn WSGI HTTP Server
-- [X] NGINX for reverse proxy and serving static files
-- [X] Automatic Self-Signed SSL Generation
+A modern, feature-rich Flask web application boilerplate designed as a jumping-off point for future projects. This project includes a complete user and role management system with authentication, permission handling, and containerized deployment.
 
-While this project has some good bones if you decide to build your app on this you may want to do the following:
-- Integrate SSO with Python-SAML or OpenID
-- Swap out SQLite for a proper database such as MySQL or Postgress or go NoSQL
-- Switch to UUIDs for Primary Keys
+## Features
+
+### Authentication & Security
+- [X] User authentication with Flask-Login and Bcrypt password hashing
+- [X] Password reset functionality with time-limited reset codes
+- [X] Session management with secure cookie handling
+- [X] User deactivation/activation with role-based permissions
+- [X] Anonymous user support for unauthenticated access
+
+### User & Role Management
+- [X] Complete user management system with create, read, update, and delete operations
+- [X] User profile pages with editable information
+- [X] User deactivation and reactivation with permission controls
+- [X] Flexible role-based access control (RBAC) system
+- [X] Role creation, editing, and deletion with permission assignment
+- [X] Action-based permission system for granular access control
+- [X] Permission dependency tracking (prevents disabling required permissions)
+- [X] System roles and hidden roles for administrative purposes
+
+### Database & ORM
+- [X] Flask-SQLAlchemy ORM for database operations
+- [X] SQLite database for easy portability
+- [X] UUID-based user and role identifiers
+- [X] Comprehensive database schema with relationships
+
+### Frontend & UI
+- [X] Bootstrap 5 integration for responsive design
+- [X] Fancy login page
+- [X] Modal-based dialogs for role management
+- [X] Dismissible Bootstrap alerts for flash messages
+- [X] User-friendly form validation with real-time feedback
+- [X] Toggle-able edit modes for profile pages
+- [X] Icon integration with Font Awesome
+- [X] Responsive navigation with collapsible sidebar
+
+### Development & Deployment
+- [X] Docker and Docker Compose configuration for containerized deployment
+- [X] Gunicorn WSGI HTTP server for production
+- [X] NGINX reverse proxy and static file serving
+- [X] Automatic self-signed SSL certificate generation
+- [X] Structured logging system
+
+
+## Setup Instructions
+
+### Prerequisites
+- Docker and Docker Compose (recommended)
+- Python 3.8+ (if running locally without Docker)
+- pip and virtualenv (for local development)
+
+### Quick Start with Docker
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd flask-2-boilerplate
+   ```
+
+2. **Start the application:**
+   ```bash
+   docker-compose up
+   ```
+
+3. **Access the application:**
+   - Open your browser and navigate to `https://localhost`
+   - Accept the self-signed certificate warning
+   - Login with the default credentials:
+     - Email: `admin@default.com`
+     - Password: `iloveflask!`
+
+4. **Stop the application:**
+   ```bash
+   docker-compose down
+   ```
+
+### Local Development Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd flask-2-boilerplate
+   ```
+
+2. **Create a virtual environment:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the application:**
+   ```bash
+   python -m boilerplate.app
+   ```
+
+5. **Access the application:**
+   - Navigate to `http://localhost:5000`
+   - Login with the default credentials:
+     - Email: `admin@default.com`
+     - Password: `iloveflask!`
+
+### Configuration
+
+Edit `boilerplate/config.py` to customize:
+- Password requirements (minimum/maximum length, character types)
+- Password reset code validity duration
+- Database settings
+- Debug mode
+- Session configuration
+
+## Testing
+
+The project includes a comprehensive test suite with **63 passing tests** covering:
+
+- ✅ Authentication & login/logout
+- ✅ User management (CRUD operations, profiles, deactivation)
+- ✅ Roles & permissions system
+- ✅ Error handling and HTTP status codes
+- ✅ Core app functionality
+
+### Quick Test Run
+
+```bash
+./scripts/run_docker_tests.sh
+```
+
+This will:
+- Start Docker containers automatically
+- Show a visual countdown while the app starts
+- Run all 63 tests
+- Clean up containers after completion
+
+For more information on testing, see [tests/README.md](tests/README.md) which includes:
+- Running specific tests
+- Coverage reports
+- Adding new tests
+- Troubleshooting
+
+### Configuration
+
+### Default Users
+
+The application seeds three default users if the database is empty:
+
+| Email | Password | Role | Status |
+|-------|----------|------|--------|
+| admin@default.com | iloveflask! | System Admin | Active |
+| default@default.com | iloveflask! | Default Role | Active |
+| deactive@default.com | iloveflask! | Default Role | Inactive |
+
+> ⚠️ **Important:** Change these credentials in production!
+
+## Default Roles
+- **System Admin:** Full system access
+- **Anonymous:** For unauthenticated users
+- **Default Role:** Basic user permissions
+
+## Project Structure
+
+```
+flask-2-boilerplate/
+├── boilerplate/
+│   ├── modules/
+│   │   ├── login/           # Login authentication
+│   │   ├── role/            # Role management system
+│   │   └── user/            # User management system
+│   ├── static/
+│   │   ├── css/             # Stylesheets
+│   │   └── js/              # JavaScript files (fully commented)
+│   ├── templates/
+│   │   ├── components/      # Reusable template components
+│   │   ├── login/           # Login templates
+│   │   ├── role/            # Role management templates
+│   │   └── user/            # User management templates
+│   ├── utils/               # Utility functions
+│   ├── app.py              # Flask application initialization
+│   ├── config.py           # Configuration settings
+│   ├── db.py               # Database initialization
+│   └── errors.py           # Error handling
+├── nginx/                   # NGINX configuration
+├── scripts/                 # Utility scripts
+├── docker-compose.yml      # Docker Compose configuration
+├── Dockerfile              # Docker image definition
+└── requirements.txt        # Python dependencies
+```
+
+## Future Enhancement Suggestions
+
+While this project has solid foundations, consider these enhancements for production use:
+
+- **Authentication:** Integrate SSO with Python-SAML or OpenID Connect
+- **Database:** Migrate from SQLite to PostgreSQL, MySQL, or other production database
+- **Monitoring:** Integrate application monitoring and error tracking
+- **Email:** Implement actual email sending for password reset functionality
+- **Audit Logging:** Track user actions and changes for compliance
+- **Two-Factor Authentication:** Add 2FA for enhanced security
+
+## License
+
+See LICENSE.md for license information.
+

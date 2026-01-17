@@ -46,9 +46,36 @@
         </header>
         <div class="scroll-pane">
             <section>
-                {% for message in get_flashed_messages() %}
-                    <div class="flash">{{ message }}</div>
-                {% endfor %}
+                {% with messages = get_flashed_messages(category_filter=["message"]) %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-primary alert-dismissible fade show mt-2 ms-2 me-2 text-start" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% with errors = get_flashed_messages(category_filter=["error"]) %}
+                    {% if errors %}
+                        {% for error in errors %}
+                            <div class="alert alert-danger alert-dismissible fade show mt-2 ms-2 me-2 text-start" role="alert">
+                                {{ error|safe }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% with successes = get_flashed_messages(category_filter=["success"]) %}
+                    {% if successes %}
+                        {% for success in successes %}
+                            <div class="alert alert-success alert-dismissible fade show mt-2 ms-2 me-2 text-start" role="alert">
+                                {{ success }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 {% block content %}{% endblock %}
             </section>
         </div>

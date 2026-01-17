@@ -1,7 +1,7 @@
 from boilerplate.app import app
 from boilerplate.config import NUMBER_OF_PROFILE_COLORS
 from titlecase import titlecase
-from datetime import datetime
+from datetime import datetime, timezone
 
 @app.template_filter()
 def deunderscore_title(string):
@@ -9,7 +9,7 @@ def deunderscore_title(string):
 
 @app.template_filter()
 def humanize_time(time):
-    never = datetime.utcfromtimestamp(0)
+    never = datetime.fromtimestamp(0, tz=timezone.utc)
     if time == never:
         return "never"
     return time

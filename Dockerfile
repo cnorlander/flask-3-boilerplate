@@ -1,6 +1,5 @@
 FROM python:slim
-RUN apt-get install -y openssl
-VOLUME /deploy
+RUN apt-get update && apt-get install -y openssl
 WORKDIR /deploy
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
