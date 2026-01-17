@@ -45,14 +45,12 @@ A modern, feature-rich Flask web application boilerplate designed as a jumping-o
 - [X] Structured logging system
 
 
-## Setup Instructions
-
-### Prerequisites
+## Prerequisites
 - Docker and Docker Compose (recommended)
 - Python 3.8+ (if running locally without Docker)
 - pip and virtualenv (for local development)
 
-### Quick Start with Docker
+## Quick Start with Docker
 
 1. **Clone the repository:**
    ```bash
@@ -79,7 +77,7 @@ A modern, feature-rich Flask web application boilerplate designed as a jumping-o
    docker-compose down
    ```
 
-### Local Development Setup
+## Local Development Setup
 
 1. **Clone the repository:**
    ```bash
@@ -109,7 +107,7 @@ A modern, feature-rich Flask web application boilerplate designed as a jumping-o
      - Email: `admin@default.com`
      - Password: `iloveflask!`
 
-### Configuration
+## Configuration
 
 Edit `boilerplate/config.py` to customize:
 - Password requirements (minimum/maximum length, character types)
@@ -117,6 +115,74 @@ Edit `boilerplate/config.py` to customize:
 - Database settings
 - Debug mode
 - Session configuration
+
+## Default Users
+
+The application seeds three default users if the database is empty:
+
+| Email | Password | Role | Status |
+|-------|----------|------|--------|
+| admin@default.com | iloveflask! | System Admin | Active |
+| default@default.com | iloveflask! | Default Role | Active |
+| deactive@default.com | iloveflask! | Default Role | Inactive |
+
+> ⚠️ **Important:** Change these credentials in production!
+
+## Default Roles
+- **System Admin:** Full system access
+- **Anonymous:** For unauthenticated users
+- **Default Role:** Basic user permissions
+
+## Project Structure
+
+```
+flask-3-boilerplate/
+├── boilerplate/
+│   ├── modules/
+│   │   ├── login/           # Login authentication
+│   │   ├── role/            # Role management system
+│   │   └── user/            # User management system
+│   ├── static/
+│   │   ├── css/             # Stylesheets
+│   │   └── js/              # JavaScript files (fully commented)
+│   ├── templates/
+│   │   ├── components/      # Reusable template components
+│   │   ├── login/           # Login templates
+│   │   ├── role/            # Role management templates
+│   │   └── user/            # User management templates
+│   ├── utils/               # Utility functions
+│   ├── logs/                # Application logs
+│   ├── app.py              # Flask application initialization
+│   ├── config.py           # Configuration settings
+│   ├── db.py               # Database initialization
+│   └── errors.py           # Error handling
+├── tests/                   # Test suite (63 tests with full coverage)
+│   ├── conftest.py         # Pytest configuration and shared fixtures
+│   ├── test_*.py           # Individual test modules
+│   └── README.md           # Testing documentation
+├── nginx/                   # NGINX configuration
+│   ├── nginx.conf          # NGINX server configuration
+│   └── ssl/                # SSL certificate generation and storage
+├── scripts/                 # Utility scripts
+│   ├── run_docker_tests.sh  # Test runner with visual countdown
+│   └── rename_project.sh    # Project rename utility
+├── docker-compose.yml      # Docker Compose configuration
+├── Dockerfile              # Docker image definition
+├── pytest.ini              # Pytest configuration
+├── requirements.txt        # Python dependencies
+└── entrypoint.sh           # Container entrypoint script
+```
+
+## Future Enhancement Suggestions
+
+While this project has solid foundations, consider these enhancements for production use:
+
+- **Authentication:** Integrate SSO with Python-SAML or OpenID Connect
+- **Database:** Migrate from SQLite to PostgreSQL, MySQL, or other production database
+- **Monitoring:** Integrate application monitoring and error tracking
+- **Email:** Implement actual email sending for password reset functionality
+- **Audit Logging:** Track user actions and changes for compliance
+- **Two-Factor Authentication:** Add 2FA for enhanced security
 
 ## Testing
 
@@ -145,65 +211,6 @@ For more information on testing, see [tests/README.md](tests/README.md) which in
 - Coverage reports
 - Adding new tests
 - Troubleshooting
-
-### Configuration
-
-### Default Users
-
-The application seeds three default users if the database is empty:
-
-| Email | Password | Role | Status |
-|-------|----------|------|--------|
-| admin@default.com | iloveflask! | System Admin | Active |
-| default@default.com | iloveflask! | Default Role | Active |
-| deactive@default.com | iloveflask! | Default Role | Inactive |
-
-> ⚠️ **Important:** Change these credentials in production!
-
-## Default Roles
-- **System Admin:** Full system access
-- **Anonymous:** For unauthenticated users
-- **Default Role:** Basic user permissions
-
-## Project Structure
-
-```
-flask-2-boilerplate/
-├── boilerplate/
-│   ├── modules/
-│   │   ├── login/           # Login authentication
-│   │   ├── role/            # Role management system
-│   │   └── user/            # User management system
-│   ├── static/
-│   │   ├── css/             # Stylesheets
-│   │   └── js/              # JavaScript files (fully commented)
-│   ├── templates/
-│   │   ├── components/      # Reusable template components
-│   │   ├── login/           # Login templates
-│   │   ├── role/            # Role management templates
-│   │   └── user/            # User management templates
-│   ├── utils/               # Utility functions
-│   ├── app.py              # Flask application initialization
-│   ├── config.py           # Configuration settings
-│   ├── db.py               # Database initialization
-│   └── errors.py           # Error handling
-├── nginx/                   # NGINX configuration
-├── scripts/                 # Utility scripts
-├── docker-compose.yml      # Docker Compose configuration
-├── Dockerfile              # Docker image definition
-└── requirements.txt        # Python dependencies
-```
-
-## Future Enhancement Suggestions
-
-While this project has solid foundations, consider these enhancements for production use:
-
-- **Authentication:** Integrate SSO with Python-SAML or OpenID Connect
-- **Database:** Migrate from SQLite to PostgreSQL, MySQL, or other production database
-- **Monitoring:** Integrate application monitoring and error tracking
-- **Email:** Implement actual email sending for password reset functionality
-- **Audit Logging:** Track user actions and changes for compliance
-- **Two-Factor Authentication:** Add 2FA for enhanced security
 
 ## License
 
