@@ -65,6 +65,8 @@ A modern, feature-rich Flask web application boilerplate designed as a jumping-o
    docker-compose up
    ```
 
+   > **Note:** Some workers may fail to start initially while database initialization is completing. This is normal behavior. Simply wait a few moments as the application establishes the database, and the workers will come online automatically.
+
 3. **Access the application:**
    - Open your browser and navigate to `https://localhost`
    - Accept the self-signed certificate warning
