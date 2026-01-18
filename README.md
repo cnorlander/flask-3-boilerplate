@@ -25,7 +25,6 @@ A modern, feature-rich Flask web application boilerplate designed as a jumping-o
 - [X] Flask-SQLAlchemy ORM for database operations
 - [X] SQLite database for easy portability
 - [X] UUID-based user and role identifiers
-- [X] Comprehensive database schema with relationships
 
 ### Frontend & UI
 - [X] Bootstrap 5 integration for responsive design
@@ -48,14 +47,14 @@ A modern, feature-rich Flask web application boilerplate designed as a jumping-o
 ## Prerequisites
 - Docker and Docker Compose (recommended)
 - Python 3.8+ (if running locally without Docker)
-- pip and virtualenv (for local development)
+- pip and virtualenv (for local development, if you don't like using docker)
 
 ## Quick Start with Docker
 
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
-   cd flask-2-boilerplate
+   cd flask-3-boilerplate
    ```
 
 2. **Start the application:**
@@ -109,12 +108,38 @@ A modern, feature-rich Flask web application boilerplate designed as a jumping-o
 
 ## Configuration
 
-Edit `boilerplate/config.py` to customize:
-- Password requirements (minimum/maximum length, character types)
-- Password reset code validity duration
-- Database settings
-- Debug mode
-- Session configuration
+### Environment Variables
+
+This project uses environment variables for configuration management. Configuration is stored in a `.env` file that is loaded by `boilerplate/config.py` at application startup.
+
+**Getting Started:**
+
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Edit `.env` to customize your settings:
+   ```bash
+   nano .env
+   ```
+
+**Available Configuration Options:**
+
+- **Flask:** Timezone, secret key, debug mode, base URL
+- **Database:** Connection string, auto-seeding
+- **Logging:** Level, file location, max size, error logging preferences
+- **Sessions:** Timeout duration (in minutes)
+- **Password Requirements:** Length, character types, reset code validity
+- **Profile:** Number of available profile colors
+
+> ⚠️ **Important:** The `.env` file is ignored by Git (see `.gitignore`). Use `.env.example` as a template and never commit actual secrets.
+
+**Production Tips:**
+- Generate a strong `APP_SECRET` using: `python3 -c "import secrets; print(secrets.token_hex(32))"`
+- Set `DEBUG_MODE=False` in production
+- Use a production database (PostgreSQL, MySQL) instead of SQLite
+- Adjust logging levels and file paths as needed
 
 ## Default Users
 
